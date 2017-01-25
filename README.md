@@ -25,4 +25,5 @@ Usage
 ```php
 use xutl\highlightjs\HighlightJsAsset.php;
 HighlightJsAsset::register($this);
+$this->registerJs('hljs.initHighlightingOnLoad();');
 ```
