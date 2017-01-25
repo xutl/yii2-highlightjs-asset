@@ -15,6 +15,10 @@ class HighlightJsAsset extends AssetBundle
      */
     public $sourcePath = '@xutl/highlightjs/assets';
 
+    public $css = [
+        'styles/default.css'
+    ];
+
     /**
      * @inherit
      */
