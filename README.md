@@ -23,7 +23,17 @@ Usage
 -----
 
 ```php
-use xutl\highlightjs\HighlightJsAsset.php;
-HighlightJsAsset::register($this);
+use xutl\highlightjs\HighlightJsAsset;
+HighlightJsAsset::register($this,'php');
 $this->registerJs('hljs.initHighlightingOnLoad();');
+```
+
+```php
+use xutl\highlightjs\HighlightJs;
+
+HighlightJs::begin([
+    'format'=>$model->format
+]);
+echo Html::encode($model->content); ?>
+HighlightJs::end()
 ```
