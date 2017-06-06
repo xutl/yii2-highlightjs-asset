@@ -10,7 +10,6 @@ namespace xutl\highlightjs;
 use yii\base\Widget;
 use yii\helpers\Html;
 use yii\base\InvalidConfigException;
-use xutl\fmt\Asset;
 
 /**
  * Class HighlightJs
@@ -42,11 +41,9 @@ class HighlightJs extends Widget
 
     public function run()
     {
-        echo Html::beginTag('div', ['class' => 'fmt']);
         echo Html::beginTag('pre');
         echo Html::tag('code',Html::encode($this->content),['class' => $this->format]);
         echo Html::endTag('pre');
-        echo Html::endTag('div');
     }
 
     /**
@@ -54,7 +51,6 @@ class HighlightJs extends Widget
      */
     public function registerAssets()
     {
-        Asset::register($this->view);
         HighlightJsAsset::register($this->view, $this->format);
         $this->view->registerJs("jQuery('pre code').each(function(i, block) {hljs.highlightBlock(block);});");
     }
