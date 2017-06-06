@@ -4,10 +4,13 @@
  * @copyright Copyright (c) 2012 TintSoft Technology Co. Ltd.
  * @license http://www.tintsoft.com/license/
  */
+
 namespace xutl\highlightjs;
 
 use yii\base\Widget;
 use yii\helpers\Html;
+use yii\base\InvalidConfigException;
+use xutl\fmt\Asset;
 
 /**
  * Class HighlightJs
@@ -15,7 +18,15 @@ use yii\helpers\Html;
  */
 class HighlightJs extends Widget
 {
+    /**
+     * @var string 代码格式
+     */
     public $format;
+
+    /**
+     * @var string 代码内容
+     */
+    public $content;
 
     /**
      * @inheritdoc
@@ -23,14 +34,27 @@ class HighlightJs extends Widget
     public function init()
     {
         parent::init();
-        echo Html::beginTag('pre');
-        echo Html::beginTag('code', ['class'=>$this->format]);
+        if (!isset ($this->content)) {
+            throw new InvalidConfigException ('The "content" property must be set.');
+        }
+        $this->registerAssets();
     }
 
     public function run()
     {
-        echo Html::endTag('code');
+        echo Html::beginTag('div', ['class' => 'fmt']);
+        echo Html::beginTag('pre');
+        echo Html::tag('code',Html::encode($this->content),['class' => $this->format]);
         echo Html::endTag('pre');
+        echo Html::endTag('div');
+    }
+
+    /**
+     * Registers the needed assets
+     */
+    public function registerAssets()
+    {
+        Asset::register($this->view);
         HighlightJsAsset::register($this->view, $this->format);
         $this->view->registerJs("jQuery('pre code').each(function(i, block) {hljs.highlightBlock(block);});");
     }
